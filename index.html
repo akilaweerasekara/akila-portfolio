@@ -7,6 +7,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <!-- Sinhala AF Sigiri Font -->
+  <style>
+    @font-face {
+      font-family: 'AF Sigiri';
+      src: url('https://font.akasa.lk/AF%20Sigiri.font?utm_source=copy') format('truetype');
+    }
+  </style>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -120,6 +129,7 @@
       background: #111;
       gap: 5rem;
       overflow: hidden;
+      position: relative;
     }
     .scroll-section img {
       width: 480px;
@@ -131,19 +141,33 @@
     }
     .scroll-text {
       flex: 1;
-      text-align: right;
+      text-align: left;
       opacity: 0;
       transform: translateX(80px);
       transition: all 1.2s ease;
+      font-family: 'AF Sigiri', serif;
     }
     .scroll-text h1 {
-      font-size: 6rem;
+      font-size: 8rem; /* Made it larger */
       font-weight: 900;
       line-height: 1.1;
       color: #9b5cff;
       letter-spacing: 4px;
     }
-    .visible img {
+
+    .meme {
+      bottom: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .visible img,
+    .visible .meme {
       opacity: 1;
       transform: translateX(0);
     }
@@ -158,11 +182,14 @@
         text-align: center;
       }
       .scroll-text h1 {
-        font-size: 3.5rem;
+        font-size: 4rem;
         text-align: center;
       }
       .scroll-section img {
         width: 320px;
+      }
+      .meme {
+        width: 180px;
       }
     }
   </style>
@@ -193,8 +220,10 @@
   <!-- Scroll Section -->
   <section id="scroll" class="scroll-section">
     <img src="images/second.png" alt="Creative Photo">
+    <!-- Meme photo added -->
+    <img class="meme" src="images/meme.png" alt="Meme Photo">
     <div class="scroll-text">
-      <h1>CREATE<br>DESIGN<br>INSPIRE</h1>
+      <h1>තනිකඩයි<br>යකෝ<br>මං !</h1>
     </div>
   </section>
 
@@ -206,16 +235,14 @@
     window.addEventListener("scroll", () => {
       const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
       if (currentScroll > lastScrollTop && currentScroll > 100) {
-        // Scrolling down
         header.classList.add("hide");
       } else {
-        // Scrolling up
         header.classList.remove("hide");
       }
       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     });
 
-    // Scroll animation for image and text
+    // Scroll animation for image, meme, and text
     const scrollSection = document.querySelector('.scroll-section');
     window.addEventListener('scroll', () => {
       const rect = scrollSection.getBoundingClientRect();
