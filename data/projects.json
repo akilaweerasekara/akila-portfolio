@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "title": "Bio Palm",
+    "description": "A palm-based, portable, non-invasive health monitoring system developed using ESP32 and advanced biomedical sensors.",
+    "image": "images/biopalm.jpg",
+    "page": "biopalm.html",
+    "technologies": ["ESP32", "MAX30105", "WebSocket", "JavaScript"],
+    "date": "2024-12-01"
+  }
+]
