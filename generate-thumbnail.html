@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Thumbnail Generator</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .screenshot-area { 
+            border: 2px dashed #9b5cff; 
+            padding: 20px; 
+            margin: 20px 0;
+            text-align: center;
+        }
+        button { 
+            background: #9b5cff; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📄 PDF Thumbnail Generator</h2>
+        <p>1. Open your PDF in browser</p>
+        <p>2. Take screenshot of first page (Windows: Win+Shift+S, Mac: Cmd+Shift+4)</p>
+        <p>3. Save as JPG in images/certificates/ folder</p>
+        <p>4. Upload PDF to files/certificates/ folder</p>
+        
+        <div class="screenshot-area">
+            <p>Take screenshot of this area:</p>
+            <div style="width: 300px; height: 200px; background: #f0f0f0; margin: 0 auto; border: 1px solid #ccc;">
+                PDF First Page Preview Area
+            </div>
+            <p>Save as: <code>certificate-name-thumb.jpg</code></p>
+        </div>
+        
+        <button onclick="window.location.href='update.html'">Go to Update Form</button>
+    </div>
+</body>
+</html>
