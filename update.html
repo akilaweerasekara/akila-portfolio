@@ -1,31 +1,591 @@
-<!-- Add this to the certificate form section -->
-<div class="form-group">
-  <label for="certificateType">Certificate Type *</label>
-  <select id="certificateType" onchange="toggleCertificateFields()">
-    <option value="image">Image Certificate (JPG/PNG)</option>
-    <option value="pdf">PDF Certificate</option>
-    <option value="link">Online Certificate (Link Only)</option>
-  </select>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Portfolio - Akila</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0d0d0d, #1a1a2e);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #9b5cff;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #9b5cff;
+        }
+        
+        .section h2 {
+            color: #9b5cff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ddd;
+            font-weight: 500;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #9b5cff;
+            box-shadow: 0 0 0 2px rgba(155, 92, 255, 0.2);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn {
+            background: #9b5cff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background: #b075ff;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #444;
+        }
+        
+        .btn-secondary:hover {
+            background: #555;
+        }
+        
+        .instructions {
+            background: rgba(155, 92, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #9b5cff;
+        }
+        
+        .instructions h3 {
+            color: #9b5cff;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+        
+        .preview {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .preview.show {
+            display: block;
+        }
+        
+        .preview img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+            max-height: 200px;
+            object-fit: contain;
+        }
+        
+        .success-message {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #a5d6a7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #444;
+            overflow-x: auto;
+        }
+        
+        .tab-button {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 16px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+        
+        .tab-button.active {
+            color: #9b5cff;
+            border-bottom: 3px solid #9b5cff;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #9b5cff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .upload-instructions {
+            background: rgba(155, 92, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #9b5cff;
+        }
+        
+        .upload-instructions h4 {
+            color: #9b5cff;
+            margin-bottom: 10px;
+        }
+        
+        .certificate-type-fields {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #333;
+        }
+        
+        .type-icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        .type-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background: rgba(155, 92, 255, 0.2);
+            color: #9b5cff;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        .json-output {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #444;
+        }
+        
+        .copy-btn {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        .copy-btn:hover {
+            background: #555;
+        }
+        
+        .field-hint {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .tab-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .tab-button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Update Your Portfolio</h1>
+        <p class="subtitle">Easy way to add projects and certificates - No coding required!</p>
+        
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="switchTab('projects')">➕ Add Project</button>
+            <button class="tab-button" onclick="switchTab('certificates')">📜 Add Certificate</button>
+            <button class="tab-button" onclick="switchTab('instructions')">📖 Instructions</button>
+        </div>
+        
+        <!-- Projects Tab -->
+        <div id="projects-tab" class="tab-content active">
+            <div class="section">
+                <h2>🎨 Add New Project</h2>
+                
+                <div class="form-group">
+                    <label for="projectTitle">Project Title *</label>
+                    <input type="text" id="projectTitle" placeholder="e.g., E-Commerce Website">
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectDescription">Description *</label>
+                    <textarea id="projectDescription" placeholder="Describe your project..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectImage">Image URL *</label>
+                    <input type="text" id="projectImage" placeholder="e.g., images/projects/my-project.jpg">
+                    <span class="field-hint">Upload image to GitHub images/projects/ folder first</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectTechnologies">Technologies (comma separated)</label>
+                    <input type="text" id="projectTechnologies" placeholder="e.g., HTML, CSS, JavaScript, React">
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectLink">Project Page Link (optional)</label>
+                    <input type="text" id="projectLink" placeholder="e.g., project-details.html or https://">
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectDate">Project Date (optional)</label>
+                    <input type="month" id="projectDate">
+                </div>
+                
+                <button class="btn" onclick="previewProject()">
+                    👁️ Preview Project
+                </button>
+                
+                <div id="projectPreview" class="preview">
+                    <h3>Preview:</h3>
+                    <div id="previewContent"></div>
+                </div>
+                
+                <button class="btn" onclick="addProject()" style="margin-top: 20px;">
+                    ✅ Generate JSON Code
+                </button>
+                
+                <div id="projectSuccess" class="success-message">
+                    <h4>✅ Project JSON Generated!</h4>
+                    <p>Copy the code below and add it to your <code>data/projects.json</code> file:</p>
+                    <div class="json-output" id="projectJsonOutput"></div>
+                    <button class="copy-btn" onclick="copyToClipboard('projectJsonOutput')">📋 Copy JSON</button>
+                    <p style="margin-top: 10px; color: #a5d6a7;">
+                        <strong>Next Steps:</strong><br>
+                        1. Copy the JSON above<br>
+                        2. Open <code>data/projects.json</code><br>
+                        3. Add it to the array (between [ and ])<br>
+                        4. Save and commit to GitHub
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Certificates Tab -->
+        <div id="certificates-tab" class="tab-content">
+            <div class="section">
+                <h2>🏆 Add New Certificate</h2>
+                
+                <div class="form-group">
+                    <label for="certificateType">Certificate Type *</label>
+                    <select id="certificateType" onchange="toggleCertificateFields()">
+                        <option value="image">📷 Image Certificate (JPG/PNG)</option>
+                        <option value="pdf">📄 PDF Certificate</option>
+                        <option value="link">🔗 Online Certificate (Link Only)</option>
+                    </select>
+                </div>
+                
+                <div id="certificateTypeFields" class="certificate-type-fields">
+                    <!-- Fields change based on type selection -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="certificateName">Certificate Name *</label>
+                    <input type="text" id="certificateName" placeholder="e.g., Web Development Professional Certificate">
+                </div>
+                
+                <div class="form-group">
+                    <label for="certificateIssuer">Issuing Organization *</label>
+                    <input type="text" id="certificateIssuer" placeholder="e.g., Coursera, Google, Microsoft">
+                </div>
+                
+                <div class="form-group">
+                    <label for="certificateDate">Date Received *</label>
+                    <input type="month" id="certificateDate">
+                </div>
+                
+                <div class="upload-instructions" id="pdfInstructions" style="display: none;">
+                    <h4>📋 For PDF Certificates:</h4>
+                    <ol>
+                        <li>Upload PDF to <code>files/certificates/</code> folder on GitHub</li>
+                        <li>Take screenshot of first page</li>
+                        <li>Save screenshot as JPG in <code>images/certificates/</code> folder</li>
+                        <li>Enter both URLs below</li>
+                    </ol>
+                </div>
+                
+                <button class="btn" onclick="previewCertificate()">
+                    👁️ Preview Certificate
+                </button>
+                
+                <div id="certificatePreview" class="preview">
+                    <h3>Preview:</h3>
+                    <div id="certPreviewContent"></div>
+                </div>
+                
+                <button class="btn" onclick="addCertificate()" style="margin-top: 20px;">
+                    ✅ Generate JSON Code
+                </button>
+                
+                <div id="certificateSuccess" class="success-message">
+                    <h4>✅ Certificate JSON Generated!</h4>
+                    <p>Copy the code below and add it to your <code>data/certificates.json</code> file:</p>
+                    <div class="json-output" id="certificateJsonOutput"></div>
+                    <button class="copy-btn" onclick="copyToClipboard('certificateJsonOutput')">📋 Copy JSON</button>
+                    <p style="margin-top: 10px; color: #a5d6a7;">
+                        <strong>Next Steps:</strong><br>
+                        1. Copy the JSON above<br>
+                        2. Open <code>data/certificates.json</code><br>
+                        3. Add it to the array (between [ and ])<br>
+                        4. Save and commit to GitHub
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Instructions Tab -->
+        <div id="instructions-tab" class="tab-content">
+            <div class="section">
+                <h2>📖 How to Update Your Portfolio</h2>
+                
+                <div class="instructions">
+                    <h3>📁 Folder Structure</h3>
+                    <pre style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; overflow-x: auto;">
+your-portfolio/
+├── data/
+│   ├── projects.json     (Your projects data)
+│   └── certificates.json (Your certificates data)
+├── images/
+│   ├── certificates/     (Certificate thumbnail images)
+│   └── projects/         (Project images)
+├── files/
+│   └── certificates/     (PDF certificate files)
+└── update.html           (This form)</pre>
+                    
+                    <h3>📸 Step 1: Upload Images/Files to GitHub</h3>
+                    <ol>
+                        <li><strong>For projects:</strong> Upload images to <code>images/projects/</code> folder</li>
+                        <li><strong>For image certificates:</strong> Upload to <code>images/certificates/</code> folder</li>
+                        <li><strong>For PDF certificates:</strong> 
+                            <ul>
+                                <li>Upload PDF to <code>files/certificates/</code> folder</li>
+                                <li>Take screenshot of first page</li>
+                                <li>Upload screenshot to <code>images/certificates/</code> folder</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    
+                    <h3>🔗 Step 2: Get File URLs</h3>
+                    <ol>
+                        <li>Go to your file on GitHub</li>
+                        <li>Click "Download" or "View Raw"</li>
+                        <li>Copy the URL from address bar</li>
+                        <li><strong>For GitHub raw URLs:</strong> Use format:<br>
+                            <code>https://raw.githubusercontent.com/YOUR_USERNAME/portfolio/main/images/.../file.jpg</code>
+                        </li>
+                    </ol>
+                    
+                    <h3>📝 Step 3: Fill the Form</h3>
+                    <ol>
+                        <li>Select correct tab (Project or Certificate)</li>
+                        <li>Fill all required fields (*)</li>
+                        <li>Paste your image/file URLs</li>
+                        <li>Click "Preview" to check</li>
+                        <li>Click "Generate JSON Code"</li>
+                    </ol>
+                    
+                    <h3>📄 Step 4: Update JSON Files</h3>
+                    <ol>
+                        <li>Copy the generated JSON code</li>
+                        <li>Go to your <code>data/</code> folder on GitHub</li>
+                        <li>Edit <code>projects.json</code> or <code>certificates.json</code></li>
+                        <li>Add the new item to the array (between [ ])</li>
+                        <li>Make sure items are separated by commas</li>
+                        <li>Save and commit changes</li>
+                    </ol>
+                    
+                    <h3>🎉 Step 5: View Your Portfolio</h3>
+                    <ol>
+                        <li>Your portfolio will automatically show new items</li>
+                        <li>Refresh your portfolio page (<code>index.html</code>)</li>
+                        <li>New projects/certificates will appear!</li>
+                    </ol>
+                    
+                    <h3>💡 Tips</h3>
+                    <ul>
+                        <li>Keep image sizes reasonable (under 1MB)</li>
+                        <li>Use descriptive names for files</li>
+                        <li>Test URLs by opening them in browser</li>
+                        <li>Always preview before adding</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+    </div>
 
-<!-- PDF Specific Fields (hidden by default) -->
-<div id="pdfFields" style="display: none;">
-  <div class="form-group">
-    <label for="certificatePdf">PDF File URL *</label>
-    <input type="text" id="certificatePdf" placeholder="e.g., files/certificates/my-certificate.pdf">
-    <small style="color: #aaa;">Upload PDF to GitHub first in files/certificates/ folder</small>
-  </div>
-  <div class="form-group">
-    <label for="pdfPage">PDF Page for Thumbnail</label>
-    <input type="number" id="pdfPage" value="1" min="1" placeholder="Page number">
-  </div>
-</div>
-
-<!-- Image Field (shown for all types) -->
-<div class="form-group">
-  <label for="certificateImage">Thumbnail Image URL *</label>
-  <input type="text" id="certificateImage" placeholder="e.g., images/certificates/cert-thumb.jpg">
-  <small style="color: #aaa;" id="imageHelp">
-    For PDF: Upload first page as image. For Link: Upload any preview image
-  </small>
-</div>
+    <script>
+        // Initialize certificate type fields
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleCertificateFields();
+            // Set current date as default
+            document.getElementById('certificateDate').value = new Date().toISOString().slice(0, 7);
+            document.getElementById('projectDate').value = new Date().toISOString().slice(0, 7);
+        });
+        
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Activate selected button
+            event.target.classList.add('active');
+        }
+        
+        function toggleCertificateFields() {
+            const type = document.getElementById('certificateType').value;
+            const fieldsContainer = document.getElementById('certificateTypeFields');
+            const pdfInstructions = document.getElementById('pdfInstructions');
+            
+            let fieldsHTML = '';
+            
+            if (type === 'pdf') {
+                fieldsHTML = `
+                    <div class="form-group">
+                        <label for="certificatePdf">📄 PDF File URL *</label>
+                        <input type="text" id="certificatePdf" placeholder="e.g., files/certificates/my-certificate.pdf">
+                        <span class="field-hint">Upload PDF to GitHub files/certificates/ folder</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="certificateImage">🖼️ Thumbnail Image URL *</label>
+                        <input type="text" id="certificateImage" placeholder="e.g., images/certificates/my-certificate-thumb.jpg">
+                        <span class="field-hint">Screenshot of first page, upload to images/certificates/ folder</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="pdfPage">📑 PDF Page for Thumbnail</label>
+                        <input type="number" id
