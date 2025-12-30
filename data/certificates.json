@@ -1,10 +1,22 @@
 [
   {
     "id": 1,
-    "name": "Example Certificate",
-    "issuer": "Sample Organization",
-    "date": "2024-01-15",
-    "image": "images/certificates/sample-certificate.jpg",
-    "credentialUrl": "#"
+    "name": "Web Development Fundamentals",
+    "issuer": "Coursera",
+    "date": "2024-11-15",
+    "type": "pdf", // "pdf", "image", or "link"
+    "file": "files/certificates/web-dev-cert.pdf", // For PDF certificates
+    "image": "images/certificates/web-dev-thumb.jpg", // For thumbnail
+    "credentialUrl": "https://coursera.org/verify/ABC123", // For online verification
+    "pages": 1 // PDF page to show as thumbnail (default: 1)
+  },
+  {
+    "id": 2,
+    "name": "Java Programming",
+    "issuer": "Oracle",
+    "date": "2024-10-20",
+    "type": "link",
+    "image": "images/certificates/java-cert-thumb.jpg",
+    "credentialUrl": "https://oracle.com/certification/verify/XYZ789"
   }
 ]
