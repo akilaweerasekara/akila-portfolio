@@ -19,4 +19,14 @@
     "image": "images/certificates/java-cert-thumb.jpg",
     "credentialUrl": "https://oracle.com/certification/verify/XYZ789"
   }
+  {
+  "id": 1767102163727,
+  "name": "AI/ML Engineer - Stage 1",
+  "issuer": "Conducted by the Centre for Open and Distance Education , Faculty of Computing, SLIIT",
+  "date": "2025-12-30",
+  "type": "pdf",
+  "image": "https://github.com/akilaweerasekara/akila-portfolio/blob/main/images/certificates/Screenshot%202025-12-30%20190932.png",
+  "file": "https://github.com/akilaweerasekara/akila-portfolio/blob/main/images/certificates/Akila%20Weerasekara%20-%202025-12-30.pdf",
+  "pages": 1
+}
 ]
