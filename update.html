@@ -588,4 +588,309 @@ your-portfolio/
                     </div>
                     <div class="form-group">
                         <label for="pdfPage">📑 PDF Page for Thumbnail</label>
-                        <input type="number" id
+                        <input type="number" id="pdfPage" value="1" min="1" placeholder="Page number (usually 1)">
+                    </div>
+                `;
+                pdfInstructions.style.display = 'block';
+            } else if (type === 'link') {
+                fieldsHTML = `
+                    <div class="form-group">
+                        <label for="certificateImage">🖼️ Preview Image URL *</label>
+                        <input type="text" id="certificateImage" placeholder="e.g., images/certificates/cert-preview.jpg">
+                        <span class="field-hint">Any preview image, upload to images/certificates/ folder</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="credentialUrl">🔗 Verification URL *</label>
+                        <input type="text" id="credentialUrl" placeholder="e.g., https://coursera.org/verify/ABC123">
+                        <span class="field-hint">Link where people can verify your certificate online</span>
+                    </div>
+                `;
+                pdfInstructions.style.display = 'none';
+            } else { // image
+                fieldsHTML = `
+                    <div class="form-group">
+                        <label for="certificateImage">🖼️ Certificate Image URL *</label>
+                        <input type="text" id="certificateImage" placeholder="e.g., images/certificates/my-certificate.jpg">
+                        <span class="field-hint">Upload certificate image to GitHub images/certificates/ folder</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="credentialUrl">🔗 Verification URL (optional)</label>
+                        <input type="text" id="credentialUrl" placeholder="e.g., https://coursera.org/verify/ABC123">
+                    </div>
+                `;
+                pdfInstructions.style.display = 'none';
+            }
+            
+            fieldsContainer.innerHTML = fieldsHTML;
+        }
+        
+        function previewProject() {
+            const title = document.getElementById('projectTitle').value;
+            const description = document.getElementById('projectDescription').value;
+            const image = document.getElementById('projectImage').value;
+            const technologies = document.getElementById('projectTechnologies').value;
+            const link = document.getElementById('projectLink').value;
+            const date = document.getElementById('projectDate').value;
+            
+            if (!title || !description || !image) {
+                alert('Please fill in all required fields (Title, Description, Image)');
+                return;
+            }
+            
+            let previewHTML = `
+                <div style="background: #1a1a1a; padding: 20px; border-radius: 10px;">
+                    <h4 style="color: #9b5cff; margin-bottom: 10px;">${title}</h4>
+                    <p style="color: #ccc; margin-bottom: 15px;">${description}</p>
+            `;
+            
+            if (image) {
+                previewHTML += `
+                    <div style="text-align: center; margin: 15px 0;">
+                        <img src="${image}" alt="${title}" style="max-width: 300px; border-radius: 8px; border: 2px solid #333;">
+                        <p style="color: #888; font-size: 0.9rem; margin-top: 5px;">Image Preview</p>
+                    </div>
+                `;
+            }
+            
+            if (technologies) {
+                const techArray = technologies.split(',').map(t => t.trim()).filter(t => t);
+                previewHTML += `
+                    <div style="margin: 15px 0;">
+                        <strong style="color: #9b5cff;">Technologies:</strong><br>
+                        <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px;">
+                            ${techArray.map(tech => `<span style="background: rgba(155,92,255,0.1); color: #9b5cff; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem;">${tech}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (link) {
+                previewHTML += `<p><strong>Project Link:</strong> ${link}</p>`;
+            }
+            
+            if (date) {
+                previewHTML += `<p><strong>Date:</strong> ${date}</p>`;
+            }
+            
+            previewHTML += `</div>`;
+            
+            document.getElementById('previewContent').innerHTML = previewHTML;
+            document.getElementById('projectPreview').classList.add('show');
+        }
+        
+        function previewCertificate() {
+            const type = document.getElementById('certificateType').value;
+            const name = document.getElementById('certificateName').value;
+            const issuer = document.getElementById('certificateIssuer').value;
+            const date = document.getElementById('certificateDate').value;
+            
+            let image, pdfUrl, credentialUrl;
+            
+            if (type === 'pdf') {
+                image = document.getElementById('certificateImage')?.value || '';
+                pdfUrl = document.getElementById('certificatePdf')?.value || '';
+                credentialUrl = '';
+            } else if (type === 'link') {
+                image = document.getElementById('certificateImage')?.value || '';
+                credentialUrl = document.getElementById('credentialUrl')?.value || '';
+                pdfUrl = '';
+            } else { // image
+                image = document.getElementById('certificateImage')?.value || '';
+                credentialUrl = document.getElementById('credentialUrl')?.value || '';
+                pdfUrl = '';
+            }
+            
+            if (!name || !issuer || !date) {
+                alert('Please fill in all required fields (Name, Issuer, Date)');
+                return;
+            }
+            
+            if ((type === 'pdf' && (!image || !pdfUrl)) || 
+                (type === 'link' && (!image || !credentialUrl)) ||
+                (type === 'image' && !image)) {
+                alert('Please fill in all required URLs for the selected certificate type');
+                return;
+            }
+            
+            let typeIcon = '📷';
+            let typeText = 'Image Certificate';
+            if (type === 'pdf') {
+                typeIcon = '📄';
+                typeText = 'PDF Certificate';
+            } else if (type === 'link') {
+                typeIcon = '🔗';
+                typeText = 'Online Certificate';
+            }
+            
+            let previewHTML = `
+                <div style="background: #1a1a1a; padding: 20px; border-radius: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h4 style="color: #9b5cff; margin: 0;">${name}</h4>
+                        <span style="background: rgba(155,92,255,0.2); color: #9b5cff; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem;">
+                            ${typeIcon} ${typeText}
+                        </span>
+                    </div>
+                    
+                    <p><strong>Issued by:</strong> ${issuer}</p>
+                    <p><strong>Date:</strong> ${date}</p>
+            `;
+            
+            if (image) {
+                previewHTML += `
+                    <div style="text-align: center; margin: 15px 0;">
+                        <img src="${image}" alt="${name}" style="max-width: 300px; max-height: 200px; border-radius: 8px; border: 2px solid #333; object-fit: contain;">
+                        <p style="color: #888; font-size: 0.9rem; margin-top: 5px;">Thumbnail Preview</p>
+                    </div>
+                `;
+            }
+            
+            if (pdfUrl) {
+                previewHTML += `<p><strong>PDF File:</strong> ${pdfUrl}</p>`;
+            }
+            
+            if (credentialUrl) {
+                previewHTML += `<p><strong>Verification URL:</strong> ${credentialUrl}</p>`;
+            }
+            
+            previewHTML += `</div>`;
+            
+            document.getElementById('certPreviewContent').innerHTML = previewHTML;
+            document.getElementById('certificatePreview').classList.add('show');
+        }
+        
+        function addProject() {
+            const title = document.getElementById('projectTitle').value;
+            const description = document.getElementById('projectDescription').value;
+            const image = document.getElementById('projectImage').value;
+            const technologies = document.getElementById('projectTechnologies').value;
+            const link = document.getElementById('projectLink').value;
+            const date = document.getElementById('projectDate').value;
+            
+            if (!title || !description || !image) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Generate unique ID
+            const id = Date.now();
+            
+            // Create project object
+            const project = {
+                id: id,
+                title: title,
+                description: description,
+                image: image,
+                page: link || "#",
+                technologies: technologies ? technologies.split(',').map(t => t.trim()).filter(t => t) : [],
+                date: date ? date + '-01' : new Date().toISOString().split('T')[0]
+            };
+            
+            // Display JSON
+            const jsonOutput = JSON.stringify(project, null, 2);
+            document.getElementById('projectJsonOutput').textContent = jsonOutput;
+            
+            // Show success message
+            document.getElementById('projectSuccess').classList.add('show');
+            
+            // Scroll to result
+            document.getElementById('projectSuccess').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function addCertificate() {
+            const type = document.getElementById('certificateType').value;
+            const name = document.getElementById('certificateName').value;
+            const issuer = document.getElementById('certificateIssuer').value;
+            const date = document.getElementById('certificateDate').value;
+            
+            if (!name || !issuer || !date) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Get type-specific fields
+            let image, pdfUrl, credentialUrl, pdfPage;
+            
+            if (type === 'pdf') {
+                image = document.getElementById('certificateImage')?.value || '';
+                pdfUrl = document.getElementById('certificatePdf')?.value || '';
+                credentialUrl = '';
+                pdfPage = document.getElementById('pdfPage')?.value || '1';
+                
+                if (!image || !pdfUrl) {
+                    alert('Please fill in both PDF URL and Thumbnail Image URL');
+                    return;
+                }
+            } else if (type === 'link') {
+                image = document.getElementById('certificateImage')?.value || '';
+                credentialUrl = document.getElementById('credentialUrl')?.value || '';
+                pdfUrl = '';
+                pdfPage = '1';
+                
+                if (!image || !credentialUrl) {
+                    alert('Please fill in both Preview Image URL and Verification URL');
+                    return;
+                }
+            } else { // image
+                image = document.getElementById('certificateImage')?.value || '';
+                credentialUrl = document.getElementById('credentialUrl')?.value || '';
+                pdfUrl = '';
+                pdfPage = '1';
+                
+                if (!image) {
+                    alert('Please fill in the Certificate Image URL');
+                    return;
+                }
+            }
+            
+            // Generate unique ID
+            const id = Date.now();
+            
+            // Create certificate object based on type
+            let certificate = {
+                id: id,
+                name: name,
+                issuer: issuer,
+                date: date + '-01',
+                type: type,
+                image: image
+            };
+            
+            // Add type-specific fields
+            if (type === 'pdf') {
+                certificate.file = pdfUrl;
+                certificate.pages = parseInt(pdfPage);
+                if (credentialUrl) certificate.credentialUrl = credentialUrl;
+            } else if (type === 'link') {
+                certificate.credentialUrl = credentialUrl;
+            } else { // image
+                if (credentialUrl) certificate.credentialUrl = credentialUrl;
+            }
+            
+            // Display JSON
+            const jsonOutput = JSON.stringify(certificate, null, 2);
+            document.getElementById('certificateJsonOutput').textContent = jsonOutput;
+            
+            // Show success message
+            document.getElementById('certificateSuccess').classList.add('show');
+            
+            // Scroll to result
+            document.getElementById('certificateSuccess').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy text. Please select and copy manually.');
+            });
+        }
+    </script>
+</body>
+</html>
