@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Header -->
+  <!-- Header - WITHOUT Add New button -->
   <header>
     <h1>Akila.</h1>
     <nav>
@@ -18,7 +18,7 @@
       <a href="#projects">Projects</a>
       <a href="#certificates">Certificates</a>
       <a href="#contact">Contact</a>
-      <a href="update.html" style="color: #9b5cff; border: 1px solid #9b5cff; padding: 5px 10px; border-radius: 5px;">➕ Add New</a>
+      <!-- No Add New button here -->
     </nav>
   </header>
 
@@ -90,7 +90,7 @@
     </div>
   </section>
 
-  <!-- Certificates Section (NEW) -->
+  <!-- Certificates Section -->
   <section id="certificates" class="certificates-section">
     <h2>Certificates</h2>
     <div id="certificates-container" class="certificates-grid">
@@ -99,7 +99,7 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact Section - WITHOUT Add New button -->
   <section id="contact" class="contact-section">
     <h2>Get In Touch</h2>
     <p>📧 akilaweerasekara89@gmail.com</p>
@@ -107,18 +107,16 @@
       <button class="btn-primary" onclick="window.location.href='mailto:akilaweerasekara89@gmail.com'">Send Mail</button>
       <button class="btn-outline" onclick="window.open('files/AkilaWeerasekara-CV.pdf')">Download CV</button>
       <button class="btn-linkedin" onclick="window.open('https://www.linkedin.com/in/akila-weerasekara-034485335/', '_blank')">LinkedIn</button>
-      <button class="btn-outline" onclick="window.location.href='update.html'">➕ Add New Item</button>
+      <!-- No "Add New Item" button here -->
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
     <p>© 2025 Akila Weerasekara | All Rights Reserved</p>
-    <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Portfolio updated automatically from JSON data</p>
   </footer>
 
   <script src="script.js"></script>
-  <!-- New script to load dynamic content -->
   <script src="load-data.js"></script>
 </body>
 </html>
