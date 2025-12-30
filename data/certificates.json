@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "name": "Example Certificate",
+    "issuer": "Sample Organization",
+    "date": "2024-01-15",
+    "image": "images/certificates/sample-certificate.jpg",
+    "credentialUrl": "#"
+  }
+]
