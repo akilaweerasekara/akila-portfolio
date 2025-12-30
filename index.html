@@ -16,7 +16,9 @@
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
+      <a href="#certificates">Certificates</a>
       <a href="#contact">Contact</a>
+      <a href="update.html" style="color: #9b5cff; border: 1px solid #9b5cff; padding: 5px 10px; border-radius: 5px;">➕ Add New</a>
     </nav>
   </header>
 
@@ -51,7 +53,7 @@
     <div class="about-content">
       <div class="about-text">
         <p>
-          I’m an enthusiastic <strong>Software Engineering undergraduate</strong> at <strong>SLIIT Kandy</strong>, 
+          I'm an enthusiastic <strong>Software Engineering undergraduate</strong> at <strong>SLIIT Kandy</strong>, 
           combining creativity with technology to design meaningful and functional digital experiences.
         </p>
         <p>
@@ -82,16 +84,18 @@
   <!-- Projects Section -->
   <section id="projects" class="projects-section">
     <h2>Projects</h2>
-    <div class="project-card">
-      <img src="images/biopalm.jpg" alt="Bio Palm Project">
-      <div class="project-info">
-        <h3>Bio Palm</h3>
-        <p>
-          A palm-based, portable, non-invasive health monitoring system developed using ESP32 and advanced biomedical sensors. 
-          It provides real-time data visualization, health classification, PDF reporting, and patient alert functionalities via web interface.
-        </p>
-        <a href="biopalm.html" class="btn-outline">View Project</a>
-      </div>
+    <div id="projects-container" class="projects-container">
+      <!-- Projects will be loaded dynamically from JSON -->
+      <div class="loading">Loading projects...</div>
+    </div>
+  </section>
+
+  <!-- Certificates Section (NEW) -->
+  <section id="certificates" class="certificates-section">
+    <h2>Certificates</h2>
+    <div id="certificates-container" class="certificates-grid">
+      <!-- Certificates will be loaded dynamically from JSON -->
+      <div class="loading">Loading certificates...</div>
     </div>
   </section>
 
@@ -103,14 +107,18 @@
       <button class="btn-primary" onclick="window.location.href='mailto:akilaweerasekara89@gmail.com'">Send Mail</button>
       <button class="btn-outline" onclick="window.open('files/AkilaWeerasekara-CV.pdf')">Download CV</button>
       <button class="btn-linkedin" onclick="window.open('https://www.linkedin.com/in/akila-weerasekara-034485335/', '_blank')">LinkedIn</button>
+      <button class="btn-outline" onclick="window.location.href='update.html'">➕ Add New Item</button>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
     <p>© 2025 Akila Weerasekara | All Rights Reserved</p>
+    <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Portfolio updated automatically from JSON data</p>
   </footer>
 
   <script src="script.js"></script>
+  <!-- New script to load dynamic content -->
+  <script src="load-data.js"></script>
 </body>
 </html>
